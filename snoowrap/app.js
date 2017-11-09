@@ -1,4 +1,8 @@
-console.log('Node is installed!');
+
+
+
+    var async = require('async');
+    console.log('Node is installed!');
 
 require('dotenv').config();
 
@@ -29,22 +33,26 @@ const streamOpts = {
 const comments = client.CommentStream(streamOpts);
 
 
-
-//const submission = r.getSubreddit('earthporn').getTop({time: 'all'}).then(console.log);
-
-var imgArray = [];
-
-var imgString = r.getSubreddit('earthporn').getTop({time: 'all'}).map(post => post.url).then(console.log);
-
-
-
-
-
-// console.log(submission);
-
-// On comment, perform whatever logic you want to do
-// comments.on('comment', (comment) => {
-//     // console.log(comment);
-// });
-
-
+var http = require('http');
+http.createServer(function(req,res){
+    
+    function doThingsWithImgLinks(imgLinks){
+        console.log(imgLinks);
+        
+        var imgLinksArray = Array.from(imgLinks);
+        console.log(imgLinksArray[0]);
+        res.writeHead(200,{'Content-Type': 'text/plain'});
+        res.write(imgLinksArray[0]);  
+        res.end();
+    }
+    
+   async function getPosts() {
+       
+         const imgLinks = await r.getSubreddit('earthporn').getTop({time: 'all'}).map(post => post.url);
+         doThingsWithImgLinks(imgLinks);
+    };
+    
+    getPosts();
+    
+}).listen(process.env.PORT,process.env.IP);
+console.log('Server running!');
