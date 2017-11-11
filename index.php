@@ -4,8 +4,6 @@
 
  <body>
 
-    <div id="main">
-    </div>
   
 <form onsubmit="return pingReddit();" class="my-form" action="index.php">
     <input type="text" name="name" id="timeInput"/>
@@ -13,7 +11,8 @@
     <input type="submit" value="Submit"">
 </form>
 
-
+<div id="photoGrid">
+    </div>
 <script type="text/javascript" >
     function pingReddit() {
         console.log(document.getElementById("subInput").value);
@@ -26,10 +25,8 @@
 </script>
 
 
-
-    <div id="photoGrid">
-	</div>
-    <script id="pingReddit" type="text/javascript" src="bundle.js"></script>
+    
+    <script type="text/javascript" src="bundle.js"></script>
 </body>
 
 

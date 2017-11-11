@@ -42,8 +42,14 @@ function doThingsWithImgLinks(imgLinks){
         var imgLinksArray = Array.from(imgLinks);
         document.getElementById('photoGrid').innerHTML ="";
         for(i=0;i<imgLinks.length;i++){
-            document.getElementById('photoGrid').innerHTML += '<img src="' + imgLinksArray[i] + '">';
-      
+            var workingImgLink = imgLinksArray[i]
+            if(workingImgLink.search("/imgur")>=0){
+                console.log('true');
+                workingImgLink.replace("/imgur","/i.imgur");
+                workingImgLink += '.jpg'
+            }
+            console.log(workingImgLink);
+            document.getElementById('photoGrid').innerHTML += '<div class="box" style=background-image:url("' + workingImgLink + '")></div>';
         }
     }
     

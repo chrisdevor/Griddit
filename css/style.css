@@ -1,27 +1,27 @@
+input {
+  width: 150px;
+  height: 40px; }
 
-*{
-}
+body {
+  margin: 0px;
+  overflow-x: hidden; }
 
+#photoGrid {
+  display: grid;
+  grid-template-columns: 25vw 25vw 25vw 25vw;
+  grid-gap: 0px;
+  background-color: #fff; }
 
-.input{
-	width:300px;
-	height:100px;
-}
+.wrapper {
+  display: grid;
+  grid-template-columns: 25vw 25vw 25vw 25vw;
+  grid-gap: 0px;
+  background-color: #fff; }
 
-input{
-	width:300px;
-	height:100px;
-}
+.box {
+  height: 25vw;
+  width: 25vw;
+  background-size: cover;
+  background-repeat: no-repeat; }
 
-#input{
-	width:300px;
-	height:100px;
-}
-
-body{
-	margin:0px;
-	overflow-x:hidden;
-
-
-}
-
+/*# sourceMappingURL=style.css.map */
