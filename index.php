@@ -10,7 +10,7 @@
     <input type="text" name="name" id="subInput"/>
     <input type="submit" value="Submit"">
 </form>
-
+<div class="showimagediv"><img class="fullScreenimg"></></div>
 <div id="photoGrid">
     </div>
 <script type="text/javascript" >

@@ -17,7 +17,32 @@ body{
 
 }
 
+.showimagediv {
+    position: fixed;
+    z-index: 3;
+    width: 100vw;
+    height: 100vh;
+    display: none;
 
+}
+
+.fullScreenimg {
+    max-width: 100vw;
+    height: auto;
+    max-height: 100vh;
+    margin: auto;
+    left: 0;
+    right: 0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+
+}
+
+.fullImage{
+	width:100px;
+	height:100px;
+}
 
 #photoGrid {
   display: grid;
@@ -27,17 +52,17 @@ body{
 }
 
 
-
-.wrapper {
-  display: grid;
-  grid-template-columns: 25vw 25vw 25vw 25vw;
-  grid-gap: 0px;
-  background-color: #fff;
-}
-
-.box {
-    height: 25vw;
-    width: 25vw;
-    background-size: cover;
-    background-repeat: no-repeat;
+.box-wrapper{
+	    height: 25vw;
+	    width: 25vw;
+	.box {
+		height: 100%;
+		width:100%;
+	    background-size: cover;
+	    background-repeat: no-repeat;
+	    background-position: center;
+	    transition: transform .25s ease-out;
+	    z-index: 1;
+	    border-radius: 3px;
+	}
 }

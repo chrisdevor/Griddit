@@ -48,9 +48,43 @@ function doThingsWithImgLinks(imgLinks){
                 workingImgLink.replace("/imgur","/i.imgur");
                 workingImgLink += '.jpg'
             }
+             var img = new Image;
+            img.src = workingImgLink;
+            var bgImgWidth = img.width;
+            var bgImgHeight = img.height;
             console.log(workingImgLink);
-            document.getElementById('photoGrid').innerHTML += '<div class="box" style=background-image:url("' + workingImgLink + '")></div>';
+            document.getElementById('photoGrid').innerHTML += '<div class="box-wrapper"> <div  data-url= "' + workingImgLink + '" class="box" style=background-image:url("' + workingImgLink + '")></div></div>';
         }
+        $('.box-wrapper')
+        .on('mouseover', function(){
+          $(this).children('.box').css({'transform': 'scale(1.05)','z-index':'2'});
+        })
+        .on('mouseout', function(){
+          $(this).children('.box').css({'transform': 'scale(1)','z-index':'1'});
+        })
+        var imgToggle=false;
+        $('.box').on('click', function() {
+            console.log(this.getAttribute("data-url"));
+            var img = $('<img />', {src    : this.getAttribute("data-url"), 'class': 'fullScreenimg'});
+            if(imgToggle==true){
+                $('.showimagediv').html(img).hide();
+                imgToggle=false;
+            }
+            if(imgToggle==false){
+                $('.showimagediv').html(img).show();
+                imgToggle=true;
+            }
+
+        })
+        $('.showimagediv').on('click', function() {
+            console.log(this.getAttribute("data-url"));
+            var img = $('<img />', {src    : this.getAttribute("data-url"), 'class': 'fullScreenimg'});
+            if(imgToggle==true){
+                $('.showimagediv').html(img).hide();
+                imgToggle=false;
+            }
+        })
+
     }
     
    async function getPosts() {
@@ -62,3 +96,52 @@ function doThingsWithImgLinks(imgLinks){
 
 }
 
+
+
+/*
+var subInput = document.getElementById("subInput").getAttribute("data-name");
+var timeInput = document.getElementById("timeInput").getAttribute("data-name");
+
+function doThingsWithImgLinks(imgLinks){
+        console.log(imgLinks);
+        
+        var imgLinksArray = Array.from(imgLinks);
+        document.getElementById('photoGrid').innerHTML ="";
+        for(i=0;i<imgLinks.length;i++){
+            var workingImgLink = imgLinksArray[i]
+            if(workingImgLink.search("/imgur")>=0){
+                // console.log('true');
+                workingImgLink.replace("/imgur","/i.imgur");
+                workingImgLink += '.jpg'
+            }
+            // console.log(workingImgLink);
+            var scaleDimension = (workingImgLink.width/workingImgLink.height);
+            console.log(scaleDimension);
+            var img = new Image;
+            img.src = workingImgLink;
+            var bgImgWidth = img.width;
+            var bgImgHeight = img.height;
+            if(bgImgHeight>bgImgWidth){
+                var imgRatio = bgImgHeight/bgImgWidth;
+                var widthLonger = false;
+            }
+            else{
+                var imgRatio = bgImgWidth/bgImgHeight;
+                var widthLonger = true;
+            }
+            console.log(bgImgHeight);
+            document.getElementById('photoGrid').innerHTML += '<div class="tile" data-height="' + bgImgHeight  +'" data-width="' + bgImgWidth  +'" data-width-longer="' + widthLonger + '" data-scale="' + imgRatio + '" data-image="' + workingImgLink + '"></div>';
+        }
+        $('.tile')
+        // tile mouse actions
+        .on('mouseover', function(){
+          $(this).children('.photo').css({'transform': 'scale('+ $(this).attr('data-scale') +')'});
+        })
+        .on('mouseout', function(){
+          $(this).children('.photo').css({'transform': 'scale(1)'});
+        })
+        .on('mousemove', function(e){
+      $(this).children('.photo').css({'transform-origin': ((e.pageX - $(this).offset().left) / $(this).width()) * 100 + '% ' + ((e.pageY - $(this).offset().top) / $(this).height()) * 100 +'%'});
+
+     })
+        */
