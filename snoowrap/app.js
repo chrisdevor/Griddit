@@ -1,5 +1,3 @@
-console.log('Node is installed!');
-
 require('dotenv').config();
 
 const Snoowrap = require('snoowrap');
@@ -33,7 +31,13 @@ const comments = client.CommentStream(streamOpts);
 window.init = function(){
 
 
-var subInput = document.getElementById("subInput").getAttribute("data-name");
+if(document.getElementById("subInputText").getAttribute("data-name")==''){
+    var subInput = document.getElementById("subInputList").getAttribute("data-name");
+}
+else{
+    var subInput = document.getElementById("subInputText").getAttribute("data-name");
+}
+
 var timeInput = document.getElementById("timeInput").getAttribute("data-name");
 
 function doThingsWithImgLinks(imgLinks){
@@ -43,17 +47,36 @@ function doThingsWithImgLinks(imgLinks){
         document.getElementById('photoGrid').innerHTML ="";
         for(i=0;i<imgLinks.length;i++){
             var workingImgLink = imgLinksArray[i]
-            if(workingImgLink.search("/imgur")>=0){
-                console.log('true');
-                workingImgLink.replace("/imgur","/i.imgur");
+            if(workingImgLink.search("ww.img")>=0){
+                workingImgLink = workingImgLink.replace("www.img","i.img");
                 workingImgLink += '.jpg'
             }
+            if(workingImgLink.search("/imgur")>=0){
+                workingImgLink = workingImgLink.replace("/imgur","/i.imgur");
+                workingImgLink += '.jpg'
+            }
+            if(workingImgLink.search("gifv")>=0){
+                workingImgLink = workingImgLink.replace("gifv","gif");
+            }
+            if(workingImgLink.search("/gfy")>=0){
+                workingImgLink = workingImgLink.replace("/gfy","/zippy.gfy");
+                workingImgLink += '.webm'
+            }
+            
              var img = new Image;
             img.src = workingImgLink;
             var bgImgWidth = img.width;
             var bgImgHeight = img.height;
-            console.log(workingImgLink);
+             if(workingImgLink.search("webm")>=0){
+            document.getElementById('photoGrid').innerHTML += '<video autoplay loop class="box-wrapper"> <source  type="video/webm" src= "' + workingImgLink + '" data-url= "' + workingImgLink + '" class="box" style=background-image:url("' + workingImgLink + '")></video>';
+            }
+            // if(workingImgLink.search("webm")>=0){
+            //     <blockquote class="imgur-embed-pub" lang="en" data-id="a/Hlxpp"><a href="//imgur.com/Hlxpp"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+            // }
+            else{
             document.getElementById('photoGrid').innerHTML += '<div class="box-wrapper"> <div  data-url= "' + workingImgLink + '" class="box" style=background-image:url("' + workingImgLink + '")></div></div>';
+
+            }
         }
         $('.box-wrapper')
         .on('mouseover', function(){
@@ -64,8 +87,8 @@ function doThingsWithImgLinks(imgLinks){
         })
         var imgToggle=false;
         $('.box').on('click', function() {
-            console.log(this.getAttribute("data-url"));
             var img = $('<img />', {src    : this.getAttribute("data-url"), 'class': 'fullScreenimg'});
+
             if(imgToggle==true){
                 $('.showimagediv').html(img).hide();
                 imgToggle=false;
@@ -77,7 +100,6 @@ function doThingsWithImgLinks(imgLinks){
 
         })
         $('.showimagediv').on('click', function() {
-            console.log(this.getAttribute("data-url"));
             var img = $('<img />', {src    : this.getAttribute("data-url"), 'class': 'fullScreenimg'});
             if(imgToggle==true){
                 $('.showimagediv').html(img).hide();
