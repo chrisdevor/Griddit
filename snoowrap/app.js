@@ -40,21 +40,25 @@ else{
 
 var timeInput = document.getElementById("timeInput").getAttribute("data-name");
 
-function doThingsWithImgLinks(imgLinks){
+function doThingsWithImgLinks(imgLinks,permaLink){
         console.log(imgLinks);
         
         var imgLinksArray = Array.from(imgLinks);
+        var imgPermaLinksArray = Array.from(permaLink);
         document.getElementById('photoGrid').innerHTML ="";
         for (i = 0; i < imgLinks.length; i++) {
                   var workingImgLink = imgLinksArray[i]
-
+                  var workingPermaLink= imgPermaLinksArray[i]
                   var img = new Image();
                   
                   img.src = workingImgLink;
+                  img.permaLink = workingPermaLink;
                   var bgImgWidth = img.width;
                   var bgImgHeight = img.height;
+
                   img.onload = function() {
 
+                        console.log(this.permaLink);
                       if(workingImgLink.search("ww.img")>=0){
                           workingImgLink = workingImgLink.replace("www.img","i.img");
                           workingImgLink += '.jpg'
@@ -72,10 +76,11 @@ function doThingsWithImgLinks(imgLinks){
                       }
 
                       if (this.width > 0) {
+                        console.log(this.src + " has a width of " + this.width);
                         if (this.src.search("webm") >= 0) {
                           document.getElementById('photoGrid').innerHTML += '<video autoplay loop class="box-wrapper"> <source  type="video/webm" src= "' + this.src + '" data-url= "' + this.src + '" class="box" style=background-image:url("' + this.src + '")></video>';
                         } else {
-                          document.getElementById('photoGrid').innerHTML += '<div class="box-wrapper"> <div  data-url= "' + this.src + '" class="box" style=background-image:url("' + this.src + '")></div></div>';
+                          document.getElementById('photoGrid').innerHTML += '<div class="box-wrapper"> <div  data-permaLink = "https://www.reddit.com' + this.permaLink  +'" data-url= "' + this.src + '" class="box" style=background-image:url("' + this.src + '")></div></div>';
 
                         }
                       }
@@ -87,27 +92,37 @@ function doThingsWithImgLinks(imgLinks){
                       .on('mouseout', function(){
                         $(this).children('.box').css({'transform': 'scale(1)','z-index':'1'});
                       })
+
+                      //                          var div = $('<a />', {href    : this.getAttribute("data-permaLink"), 'class': 'permaLinkDiv'});
+                     
+
                       var imgToggle=false;
                       $('.box').on('click', function() {
-                          var img = $('<img />', {src    : this.getAttribute("data-url"), 'class': 'fullScreenimg'});
+                          $('.fullScreenimg').attr('src', this.getAttribute("data-url") );
+                          $('.permaLinkDiv').attr('href', this.getAttribute("data-permaLink") );
+
+
 
                           if(imgToggle==true){
-                              $('.showimagediv').html(img).hide();
+                            $('.showimagediv').addClass('hide');
                               imgToggle=false;
                           }
                           if(imgToggle==false){
-                              $('.showimagediv').html(img).show();
+                             $('.showimagediv').removeClass('hide'); 
                               imgToggle=true;
                           }
 
                       })
                       $('.showimagediv').on('click', function() {
                           var img = $('<img />', {src    : this.getAttribute("data-url"), 'class': 'fullScreenimg'});
+                          var div = $('<a />', {href    : this.getAttribute("data-permaLink"), 'class': 'permaLinkDiv'});
                           if(imgToggle==true){
-                              $('.showimagediv').html(img).hide();
-                              imgToggle=false;
+                            $('.showimagediv').addClass('hide');
+                              divToggle=false;
                           }
+
                       })
+
                   }
                 }
         
@@ -116,7 +131,9 @@ function doThingsWithImgLinks(imgLinks){
     
    async function getPosts() {
         const imgLinks = await r.getSubreddit(subInput).getTop({time: timeInput}).map(post => post.url);
-        doThingsWithImgLinks(imgLinks);
+        const permaLink = await r.getSubreddit(subInput).getTop({time: timeInput}).map(post => post.permalink);
+        // const permaLink = r.getSubreddit(subInput).getTop({time: timeInput}).map(post => post.permalink).then(console.log);
+        doThingsWithImgLinks(imgLinks,permaLink);
     };
     
     getPosts();
