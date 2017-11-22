@@ -122,7 +122,6 @@ form{
 	display: grid;
 	grid-template-columns: 25vw 25vw 25vw 25vw;
 	grid-gap: 0px;
-	background-color:$secondarycolor;
 	z-index: 2;
 	position: absolute;
 }
@@ -159,6 +158,22 @@ select, input {
 	background-image: none;
 }
 
+select, input {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0 0 0 .5em;
+	color: #fff;
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	left: 0;
+	
+	&::placeholder{
+		color: #fff;
+	}
+
+}
 
 /* Custom Select, input */
 .select, {
@@ -173,6 +188,7 @@ select, input {
 	margin:1vw;
 	&.submit{
 		width: 15em;
+		padding:0;
 		&:hover{
 			background: #3a5168;
 			transition: transform .25s ease-out;
@@ -186,21 +202,7 @@ select, input {
 		}
 	}
 }
-select, input {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0 0 0 .5em;
-	color: #fff;
-	cursor: pointer;
-	position: absolute;
-	top: 0;
-	left: 0;
-	&::placeholder{
-		color: #fff;
-	}
 
-}
 select, input::-ms-expand {
 	display: none;
 }

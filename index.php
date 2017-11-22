@@ -10,10 +10,10 @@ include "top.php";
             <div class="select">
                 <select id="timeInput">
                   <option value="all">All Time</option>
-                  <option value="year">Year</option>
-                  <option value="month">Month</option>
-                  <option value="week">Week</option>
-                  <option value="day">Day</option>
+                  <option value="year">Past Year</option>
+                  <option value="month">Past Month</option>
+                  <option value="week">Past Week</option>
+                  <option value="day">Past Day</option>
               </select>
           </div>
           <div class="select">
@@ -30,7 +30,6 @@ include "top.php";
               <option value="bonsaiporn">Bonsai Trees</option>
               <option value="botanicalporn">Botanical</option>
               <option value="cats">Cats</option>
-              <option value="cemeteryporn">Cemeteries</option>
               <option value="churchporn">Churches</option>
               <option value="cityporn">Cities</option>
               <option value="colorizedhistory">Colorized History</option>
